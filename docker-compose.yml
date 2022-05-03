@@ -1,7 +1,9 @@
 version: '3'
 
 services:
-  product-service:
-    build: ./product
-    volumes:
-      -
+  web:
+    build: .
+    ports:
+      - "8000:5000"
+
+
