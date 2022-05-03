@@ -57,7 +57,6 @@ class Victorina(Resource):
         json_res = result.json()
         for i in range(question_num):
             if_exists(json_res[i]['id'], question_num, i)
-            # datetime_object = datetime.strptime(json_res[0]['created_at'], '%b %d %Y %I:%M%p')
             new_question = VictorinaModel(
                 id=json_res[i]['id'],
                 question_text=json_res[i]['question'],

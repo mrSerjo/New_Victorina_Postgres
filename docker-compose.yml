@@ -1,9 +1,32 @@
-version: '3'
+version: '3.6'
 
 services:
-  web:
+  api:
     build: .
+    depends_on:
+      - db
+    environment:
+      STAGE: test
+      SQLALCHEMY_DATABASE_URI: 'postgresql://postgres:user@localhost/VictorinaDB'
+    networks:
+      - default
     ports:
-      - "8000:5000"
+      - 5000:5000
+    volumes:
+      - ./app:/usr/src/app/app
+      - ./migrations:/usr/src/app/migrations
+    restart: always
 
-
+  db:
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: user
+      POSTGRES_DB: VictorinaDB
+    image: postgres:latest
+    networks:
+      - default
+    ports:
+      - 5405:5432
+    restart: always
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
